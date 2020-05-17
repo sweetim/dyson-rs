@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d1496dea-c318-4b61-afaa-85b4e8438dde" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/api.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api_error.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util.rs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="05eaf27d" />
+  </component>
+  <component name="ProjectId" id="1btuNi4hFHVgAwTbtSnWDmbPxHl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\dyson-rs\src" />
+      <recent name="D:\workspace\dyson-rs\src\dyson_api" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cargo Command.Test main::test">
+    <configuration name="Test main::test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="test --package dyson-rs --bin dyson-rs test" />
+      <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test test::it_decrypt_local_credentials" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="test --package dyson-rs --bin dyson-rs test::it_decrypt_local_credentials -- --exact" />
+      <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test test::it_decrypt_password" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="test --package dyson-rs --bin dyson-rs test::it_decrypt_password -- --exact" />
+      <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="run --package dyson-rs --bin dyson-rs" />
+      <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cargo Command.Test main::test" />
+        <item itemvalue="Cargo Command.run" />
+        <item itemvalue="Cargo Command.Test test::it_decrypt_local_credentials" />
+        <item itemvalue="Cargo Command.Test test::it_decrypt_password" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1496dea-c318-4b61-afaa-85b4e8438dde" name="Default Changelist" comment="" />
+      <created>1589463672900</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589463672900</updated>
+      <workItem from="1589463674102" duration="227000" />
+      <workItem from="1589463914499" duration="20769000" />
+      <workItem from="1589550658226" duration="7540000" />
+      <workItem from="1589618173467" duration="3244000" />
+      <workItem from="1589640403489" duration="33576000" />
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2073" y="564" key="#Notifications" timestamp="1589463704213">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="2073" y="564" key="#Notifications/0.0.3440.1400@0.0.3440.1400" timestamp="1589463704213" />
+    <state x="931" y="398" key="FileChooserDialogImpl" timestamp="1589549283354">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="931" y="398" key="FileChooserDialogImpl/0.0.3440.1400@0.0.3440.1400" timestamp="1589549283354" />
+    <state width="1804" height="407" key="GridCell.Tab.0.bottom" timestamp="1589552185681">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1804" height="407" key="GridCell.Tab.0.bottom/0.0.3440.1400@0.0.3440.1400" timestamp="1589552185681" />
+    <state width="1804" height="407" key="GridCell.Tab.0.center" timestamp="1589552185681">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1804" height="407" key="GridCell.Tab.0.center/0.0.3440.1400@0.0.3440.1400" timestamp="1589552185681" />
+    <state width="1804" height="407" key="GridCell.Tab.0.left" timestamp="1589552185681">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1804" height="407" key="GridCell.Tab.0.left/0.0.3440.1400@0.0.3440.1400" timestamp="1589552185681" />
+    <state width="1804" height="407" key="GridCell.Tab.0.right" timestamp="1589552185681">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state width="1804" height="407" key="GridCell.Tab.0.right/0.0.3440.1400@0.0.3440.1400" timestamp="1589552185681" />
+    <state x="1180" y="352" key="SettingsEditor" timestamp="1589640477387">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="1180" y="352" key="SettingsEditor/0.0.3440.1400@0.0.3440.1400" timestamp="1589640477387" />
+    <state x="589" y="320" width="672" height="678" key="search.everywhere.popup" timestamp="1589704499219">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="589" y="320" width="672" height="678" key="search.everywhere.popup/0.0.3440.1400@0.0.3440.1400" timestamp="1589704499219" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/dyson_rs$Test_test__it_decrypt_local_credentials.info" NAME="Test test::it_decrypt_local_credentials Coverage Results" MODIFIED="1589551075141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="RsCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" CONTEXT_FILE_PATH="D:\workspace\dyson-rs" />
+    <SUITE FILE_PATH="coverage/dyson_rs$Test_test__it_decrypt_password.info" NAME="Test test::it_decrypt_password Coverage Results" MODIFIED="1589470191074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="RsCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" CONTEXT_FILE_PATH="D:\workspace\dyson-rs" />
+  </component>
+</project>

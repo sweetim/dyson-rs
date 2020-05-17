@@ -1,0 +1,15 @@
+[package]
+name = "dyson"
+version = "0.1.0"
+authors = ["Swee Tim <hosweetim@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.10", features = ["json"] }
+tokio = { version = "0.2", features = ["full"] }
+rust-crypto = "^0.2"
+base64 = "0.12.0"
