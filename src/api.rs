@@ -42,13 +42,7 @@ impl DysonClient {
     async fn get_devices_manifest(&mut self) -> Result<Vec<DeviceManifest>, Box<dyn std::error::Error>> {
         let url = format!("{}/v2/provisioningservice/manifest", DYSON_API_URL);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        let device_manifest: Vec<DeviceManifest> = response.json().await?;
+        let device_manifest: Vec<DeviceManifest> = self.request_dyson_api_json(&url).await?;
         self.device_manifest = device_manifest.clone();
         Ok(device_manifest)
     }
@@ -59,13 +53,7 @@ impl DysonClient {
                             device,
                             self.user_credentials.country_code);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        Ok(self.request_dyson_api_json(&url).await?)
     }
 
     pub async fn get_device_environment_data_help(&self, device: &str) -> Result<EnvironmentDataHelp, Box<dyn std::error::Error>> {
@@ -74,13 +62,7 @@ impl DysonClient {
                           device,
                           self.user_credentials.country_code);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        Ok(self.request_dyson_api_json(&url).await?)
     }
 
     pub async fn get_device_environment_data_daily_legacy(&self, device: &str) -> Result<Vec<EnvironmentDataDaily>, Box<dyn std::error::Error>> {
@@ -88,13 +70,7 @@ impl DysonClient {
                           DYSON_API_URL,
                           device);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        Ok(self.request_dyson_api_json(&url).await?)
     }
 
     pub async fn get_device_environment_data_weekly_legacy(&self, device: &str) -> Result<Vec<EnvironmentDataWeekly>, Box<dyn std::error::Error>> {
@@ -102,13 +78,7 @@ impl DysonClient {
                           DYSON_API_URL,
                           device);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        Ok(self.request_dyson_api_json(&url).await?)
     }
 
     pub async fn get_device_environment_data_weekly(&self, device: &str) -> Result<String, Box<dyn std::error::Error>> {
@@ -116,13 +86,7 @@ impl DysonClient {
                           DYSON_API_URL,
                           device);
 
-        let client = reqwest::Client::new();
-        let response = client.get(&url)
-            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-            .send()
-            .await?;
-
-        Ok(response.text().await?)
+        Ok(self.request_dyson_api_text(&url).await?)
     }
 
     pub async fn get_device_environment_data_daily(&self, device: &str) -> Result<String, Box<dyn std::error::Error>> {
@@ -130,26 +94,30 @@ impl DysonClient {
                           DYSON_API_URL,
                           device);
 
+        Ok(self.request_dyson_api_text(&url).await?)
+    }
+
+    pub async fn request_dyson_api_json<'a, T>(&self, url: &str) -> Result<T, Box<dyn std::error::Error>>
+        where for<'de> T: serde::Deserialize<'de> + 'a
+    {
         let client = reqwest::Client::new();
-        let response = client.get(&url)
+        let response = client.get(url)
+            .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub async fn request_dyson_api_text(&self, url: &str) -> Result<String, Box<dyn std::error::Error>> {
+        let client = reqwest::Client::new();
+        let response = client.get(url)
             .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
             .send()
             .await?;
 
         Ok(response.text().await?)
     }
-
-    // pub async fn request_dyson_api<'a, T>(&mut self, url: &str) -> Result<T, Box<dyn std::error::Error>>
-    //     where T: serde::Deserialize<'a>
-    // {
-    //     let client = reqwest::Client::new();
-    //     let response = client.get(url)
-    //         .basic_auth(&self.account_credentials.account, Some(&self.account_credentials.password))
-    //         .send()
-    //         .await?;
-    //
-    //     Ok(response.json().await?)
-    // }
 
     fn decrypt_local_credentials(local_credentials: &str) -> Result<DecryptedLocalCredentials, DecryptCredentialsError> {
         let key = (0..0x20).map(|x| x + 1)
