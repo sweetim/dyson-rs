@@ -102,6 +102,7 @@ version = "0.1.0"
 dependencies = [
  "base64 0.12.1",
  "chrono",
+ "num-traits",
  "paho-mqtt",
  "reqwest",
  "rust-crypto",
