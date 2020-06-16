@@ -38,17 +38,14 @@ pub struct ConnectionStatus {
     pub reset_source: String,
 }
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
-pub struct RespondPayload<T> {
-    #[serde(rename = "msg")]
-    pub message: String,
-    #[serde(rename = "time")]
-    pub time: String,
-    pub data: T,
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct EnvironmentalCurrentSensorRaw {
+    time: String,
+    data: EnvironmentalCurrentSensorDataRaw
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct EnvironmentCurrentSensorDataRaw {
+pub struct EnvironmentalCurrentSensorDataRaw {
     pub tact: String,
     pub hact: String,
     pub pact: String,
@@ -66,7 +63,7 @@ pub struct EnvironmentCurrentSensorData {
 }
 
 impl EnvironmentCurrentSensorData {
-    pub fn from_raw(raw: &EnvironmentCurrentSensorDataRaw) -> Self {
+    pub fn from_raw(raw: &EnvironmentalCurrentSensorDataRaw) -> Self {
         let temperature_kelvin = raw.tact.parse::<f32>().unwrap_or(0.0) / 10.0;
         let humidity_percentage = raw.hact.parse::<f32>().unwrap_or(0.0);
         let dust = raw.pact.parse::<f32>().unwrap_or(0.0);
@@ -85,7 +82,6 @@ impl EnvironmentCurrentSensorData {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CurrentStateRaw {
-    pub msg: String,
     pub time: String,
     #[serde(rename = "mode-reason")]
     pub mode_reason: String,
@@ -162,9 +158,152 @@ fn from_raw_string_to_kelvin<'de, T, D>(deserializer: D) -> Result<T, D::Error>
         .map(|x| x / T::from_f32(10.0).unwrap())
 }
 
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[serde(tag = "msg")]
+pub enum StatusCurrentResponse {
+    #[serde(rename = "ENVIRONMENTAL-CURRENT-SENSOR-DATA")]
+    EnvironmentalCurrentSensorData(EnvironmentalCurrentSensorRaw),
+    #[serde(rename = "CURRENT-STATE")]
+    CurrentState(CurrentStateRaw)
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct HelloRaw {
+    pub time: String,
+    pub model: String,
+    pub version: String,
+    pub protocol: String,
+    #[serde(rename = "serialNumber")]
+    pub serial_number: String,
+    #[serde(rename = "mac address")]
+    pub mac_address: String,
+    #[serde(rename = "module hardware")]
+    pub module_hardware: String,
+    #[serde(rename = "module bootloader")]
+    pub module_bootloader: String,
+    #[serde(rename = "module software")]
+    pub module_software: String,
+    #[serde(rename = "module nwp")]
+    pub module_nwp: String,
+    #[serde(rename = "product hardware")]
+    pub product_hardware: String,
+    #[serde(rename = "product bootloader")]
+    pub product_bootloader: String,
+    #[serde(rename = "product software")]
+    pub product_software: String,
+    #[serde(rename = "reset-source")]
+    pub reset_source: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(tag = "msg")]
+pub enum StatusConnectionResponse {
+    #[serde(rename = "HELLO")]
+    Hello(HelloRaw),
+}
+
+
 #[cfg(test)]
 mod test {
     use super::*;
+
+    #[test]
+    fn it_serialize_to_right_type() {
+        let samples: Vec<(StatusCurrentResponse, &str)> = vec![
+            (
+                StatusCurrentResponse::EnvironmentalCurrentSensorData(EnvironmentalCurrentSensorRaw{
+                    time: String::from("2020-06-09T14:05:04.000Z"),
+                    data: EnvironmentalCurrentSensorDataRaw{
+                        tact: String::from("2980"),
+                        hact: String::from("0056"),
+                        pact: String::from("0003"),
+                        vact: String::from("0002"),
+                        sltm: String::from("OFF"),
+                    },
+                }),
+                r#"
+                {
+                    "msg":"ENVIRONMENTAL-CURRENT-SENSOR-DATA",
+                    "time":"2020-06-09T14:05:04.000Z",
+                    "data": {
+                        "tact":"2980",
+                        "hact":"0056",
+                        "pact":"0003",
+                        "vact":"0002",
+                        "sltm":"OFF"
+                    }
+                }"#
+            ),
+            (
+                StatusCurrentResponse::CurrentState(CurrentStateRaw{
+                    time: String::from("2020-06-09T14:05:04.001Z"),
+                    mode_reason: String::from("LSCH"),
+                    state_reason: String::from("MODE"),
+                    dial: String::from("OFF"),
+                    rssi: -36,
+                    product_state: ProductState{
+                        fan_mode: FanMode::Auto,
+                        fan_state: FanState::On,
+                        fan_speed: FanSpeed::Auto,
+                        quality_target: QualityTarget::Better,
+                        oscillation_status: OscillationStatus::On,
+                        air_quality_monitoring_status: AirQualityMonitoringStatus::On,
+                        filter_life: 3297,
+                        ercd: String::from("NONE"),
+                        night_mode: NightMode::On,
+                        wacd: String::from("NONE"),
+                        heat_mode: HeatMode::Off,
+                        heat_target_kelvin: 298.2,
+                        heat_state: HeatState::Off,
+                        fan_focus_mode: FanFocusMode::Wide,
+                        tilt_state: TiltState::No,
+                    },
+                    scheduler: SchedulerRaw{
+                        srsc: String::from("e854"),
+                        dstv: String::from("0000"),
+                        tzid: String::from("0001")
+                    }
+                }),
+                r#"
+                {
+                    "msg":"CURRENT-STATE",
+                    "time":"2020-06-09T14:05:04.001Z",
+                    "mode-reason":"LSCH",
+                    "state-reason":"MODE",
+                    "dial":"OFF",
+                    "rssi":"-36",
+                    "product-state":{
+                        "fmod":"AUTO",
+                        "fnst":"FAN",
+                        "fnsp":"AUTO",
+                        "qtar":"0001",
+                        "oson":"ON",
+                        "rhtm":"ON",
+                        "filf":"3297",
+                        "ercd":"NONE",
+                        "nmod":"ON",
+                        "wacd":"NONE",
+                        "hmod":"OFF",
+                        "hmax":"2982",
+                        "hsta":"OFF",
+                        "ffoc":"OFF",
+                        "tilt":"OK"
+                    },
+                    "scheduler":{
+                        "srsc":"e854",
+                        "dstv":"0000",
+                        "tzid":"0001"
+                    }
+                }"#
+            )
+        ];
+
+        for (expected, input) in samples {
+            let actual: StatusCurrentResponse = serde_json::from_str(input).unwrap();
+
+            assert_eq!(expected, actual);
+        }
+    }
 
     #[test]
     fn it_converts_environment_current_sensor_data_from_raw() {
@@ -177,7 +316,7 @@ mod test {
                 "sltm":"OFF"
             }"#;
 
-        let environment_current_sensor_data_raw: EnvironmentCurrentSensorDataRaw = serde_json::from_str(raw).unwrap();
+        let environment_current_sensor_data_raw: EnvironmentalCurrentSensorDataRaw = serde_json::from_str(raw).unwrap();
 
         let expected = EnvironmentCurrentSensorData{
             humidity_percentage: 73.0,
@@ -227,7 +366,6 @@ mod test {
             }"#;
 
         let expected = CurrentStateRaw{
-            msg: String::from("CURRENT-STATE"),
             time: String::from("2020-05-19T14:53:04.000Z"),
             mode_reason: String::from("LSCH"),
             state_reason: String::from("ENV"),
